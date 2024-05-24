@@ -17,6 +17,7 @@ namespace Elena
 			spdlog::error("Failed to create GLFW window");
 			glfwTerminate();
 		}
+		glfwSetWindowUserPointer(m_pWindow, this);
 		glfwMakeContextCurrent(m_pWindow);
 		
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -43,5 +44,12 @@ namespace Elena
 	void CWindow::pollEvents() const
 	{
 		glfwPollEvents();
+	}
+
+	CWindow* CWindow::getWindowByNative(GLFWwindow* vWindow)
+	{
+		CWindow* pWindow = static_cast<CWindow*>(glfwGetWindowUserPointer(vWindow));
+		_ASSERTE(pWindow != nullptr);
+		return pWindow;
 	}
 }

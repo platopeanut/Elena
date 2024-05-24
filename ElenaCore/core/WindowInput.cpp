@@ -1,46 +1,49 @@
-#include "ElenaInput.h"
+#include "WindowInput.h"
 #include "ElenaApp.h"
 #include "SceneManager.h"
 
 namespace Elena
-{	
-	void CElenaInput::processInput(float vDeltaTime)
+{
+	CWindowInput::CWindowInput(const std::shared_ptr<CWindow>& vWindow) :m_pWindow(vWindow)
 	{
-		const auto& pWindow = CElenaApp::getInstance().getWindow();
+		__setWindowCallback();
+	}
+
+	void CWindowInput::processInput(float vDeltaTime)
+	{
 		const auto& pCameraController = CSceneManager::getInstance().getActiveScene()->getActiveCameraController();
 		
-		if (glfwGetKey(pWindow->getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(pWindow->getWindow(), true);
+		if (glfwGetKey(m_pWindow->getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(m_pWindow->getWindow(), true);
 
 		pCameraController->tick(vDeltaTime);
 	}
 
-	void CElenaInput::setWindowCallback()
+	bool CWindowInput::getKeyDown(int vKeyCode)
 	{
-		const auto& pWindow = CElenaApp::getInstance().getWindow();
-		glfwSetFramebufferSizeCallback(pWindow->getWindow(), __framebufferSizeCallback);
-		glfwSetCursorPosCallback(pWindow->getWindow(), __mouseCallback);
-		glfwSetScrollCallback(pWindow->getWindow(), __scrollCallback);
+		return glfwGetKey(m_pWindow->getWindow(), vKeyCode) == GLFW_PRESS;
+	}
+
+	void CWindowInput::__setWindowCallback()
+	{
+		glfwSetFramebufferSizeCallback(m_pWindow->getWindow(), __framebufferSizeCallback);
+		glfwSetCursorPosCallback(m_pWindow->getWindow(), __mouseCallback);
+		glfwSetScrollCallback(m_pWindow->getWindow(), __scrollCallback);
 		//glfwSetInputMode(pWindow->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
-	bool CElenaInput::getKeyDown(int vKeyCode)
+	void CWindowInput::__framebufferSizeCallback(GLFWwindow* vWindow, int vWidth, int vHeight)
 	{
-		const auto& pWindow = CElenaApp::getInstance().getWindow();
-		return glfwGetKey(pWindow->getWindow(), vKeyCode) == GLFW_PRESS;
-	}
-
-	void CElenaInput::__framebufferSizeCallback(GLFWwindow* vWindow, int vWidth, int vHeight)
-	{
+		
 		glViewport(0, 0, vWidth, vHeight);
-		const auto& pWindow = CElenaApp::getInstance().getWindow();
+		const auto& pWindow = CWindow::getWindowByNative(vWindow);
 		pWindow->setWidth(vWidth);
 		pWindow->setHeight(vHeight);
 		const auto& pCameraController = CSceneManager::getInstance().getActiveScene()->getActiveCameraController();
 		pCameraController->processViewportSizeChange(pWindow->getAspect());
 	}
 
-	void CElenaInput::__mouseCallback(GLFWwindow* vWindow, double vXposIn, double vYposIn)
+	void CWindowInput::__mouseCallback(GLFWwindow* vWindow, double vXposIn, double vYposIn)
 	{
 		static float LastX = 0.0f;
 		static float LastY = 0.0f;
@@ -66,7 +69,7 @@ namespace Elena
 		pCameraController->processMouseMovement(Xoffset, Yoffset);
 	}
 
-	void CElenaInput::__scrollCallback(GLFWwindow* vWindow, double vXoffset, double vYoffset)
+	void CWindowInput::__scrollCallback(GLFWwindow* vWindow, double vXoffset, double vYoffset)
 	{
 		const auto& pCameraController = CSceneManager::getInstance().getActiveScene()->getActiveCameraController();
 		pCameraController->processMouseScroll(static_cast<float>(vYoffset));

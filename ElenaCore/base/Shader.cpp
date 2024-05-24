@@ -112,5 +112,6 @@ namespace Elena
 		if (vShaderType == EShaderType::VERTEX) return "VERTEX";
 		if (vShaderType == EShaderType::FRAGMENT) return "FRAGMENT";
 		if (vShaderType == EShaderType::GEOMETRY) return "GEOMETRY";
+		return "UNDEFINED";
 	}
 }

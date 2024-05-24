@@ -32,8 +32,9 @@
     <ClCompile Include="3rdparty\imgui\imgui_tables.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="3rdparty\stb_image.cpp" />
+    <ClCompile Include="material\CheckerMaterial.cpp" />
     <ClCompile Include="material\BlankMaterial.cpp" />
-    <ClCompile Include="core\ElenaUI.cpp" />
+    <ClCompile Include="core\WindowUI.cpp" />
     <ClCompile Include="light\DirectionalLight.cpp" />
     <ClCompile Include="material\PhongMaterial.cpp" />
     <ClCompile Include="utils\MeshImporter.cpp" />
@@ -41,7 +42,7 @@
     <ClCompile Include="utils\AssetsPath.cpp" />
     <ClCompile Include="core\ElenaApp.cpp" />
     <ClCompile Include="base\Window.cpp" />
-    <ClCompile Include="core\ElenaInput.cpp" />
+    <ClCompile Include="core\WindowInput.cpp" />
     <ClCompile Include="base\VertexBuffer.cpp" />
     <ClCompile Include="base\Shader.cpp" />
     <ClCompile Include="base\Texture2D.cpp" />
@@ -69,8 +70,9 @@
     <ClInclude Include="3rdparty\imgui\imstb_rectpack.h" />
     <ClInclude Include="3rdparty\imgui\imstb_textedit.h" />
     <ClInclude Include="3rdparty\imgui\imstb_truetype.h" />
+    <ClInclude Include="material\CheckerMaterial.h" />
     <ClInclude Include="material\BlankMaterial.h" />
-    <ClInclude Include="core\ElenaUI.h" />
+    <ClInclude Include="core\WindowUI.h" />
     <ClInclude Include="material\PhongMaterial.h" />
     <ClInclude Include="utils\MeshImporter.h" />
     <ClInclude Include="utils\def.h" />
@@ -81,7 +83,7 @@
     <ClInclude Include="camera\Camera.h" />
     <ClInclude Include="core\ElenaApp.h" />
     <ClInclude Include="base\Window.h" />
-    <ClInclude Include="core\ElenaInput.h" />
+    <ClInclude Include="core\WindowInput.h" />
     <ClInclude Include="base\VertexBuffer.h" />
     <ClInclude Include="base\Shader.h" />
     <ClInclude Include="base\Texture2D.h" />
@@ -156,11 +158,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -173,11 +176,12 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -190,7 +194,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -209,7 +213,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

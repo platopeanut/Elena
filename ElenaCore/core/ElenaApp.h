@@ -3,6 +3,8 @@
 #include <memory>
 #include <functional>
 #include "base/Window.h"
+#include "WindowInput.h"
+#include "WindowUI.h"
 
 namespace Elena
 {
@@ -20,6 +22,8 @@ namespace Elena
 		CElenaApp(const CElenaApp&) = delete;
 		CElenaApp& operator=(const CElenaApp&) = delete;
 		std::shared_ptr<CWindow> m_pWindow;
+		std::shared_ptr<CWindowInput> m_pWindowInput;
+		std::shared_ptr<CWindowUI> m_pWindowUI;
 		float m_DeltaTime;
 		std::function<void()> m_pUiFunc;
 	};

@@ -27,7 +27,7 @@
     <ClCompile Include="core\ElenaApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\ElenaInput.cpp">
+    <ClCompile Include="core\WindowInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\VertexBuffer.cpp">
@@ -111,7 +111,7 @@
     <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\ElenaUI.cpp">
+    <ClCompile Include="core\WindowUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="material\PhongMaterial.cpp">
@@ -123,6 +123,9 @@
     <ClCompile Include="material\BlankMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="material\CheckerMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Window.h">
@@ -131,7 +134,7 @@
     <ClInclude Include="core\ElenaApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\ElenaInput.h">
+    <ClInclude Include="core\WindowInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\VertexBuffer.h">
@@ -233,7 +236,7 @@
     <ClInclude Include="3rdparty\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\ElenaUI.h">
+    <ClInclude Include="core\WindowUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\def.h">
@@ -246,6 +249,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="material\BlankMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="material\CheckerMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

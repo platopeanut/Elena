@@ -1,7 +1,5 @@
 #include "ElenaApp.h"
 #include <spdlog/spdlog.h>
-#include "ElenaInput.h"
-#include "ElenaUI.h"
 #include "SceneManager.h"
 #include "primitive/Primitive.h"
 
@@ -16,8 +14,9 @@ namespace Elena
 	void CElenaApp::setMainWindow(const std::shared_ptr<CWindow>& vWindow)
 	{
 		m_pWindow = vWindow;
-		CElenaInput::setWindowCallback();
-		CElenaUI::init();
+		m_pWindowInput = std::make_shared<CWindowInput>(vWindow);
+		m_pWindowUI = std::make_shared<CWindowUI>(vWindow);
+		m_pWindowUI->init();
 	}
 
 	const std::shared_ptr<CWindow>& CElenaApp::getWindow() const
@@ -35,11 +34,11 @@ namespace Elena
 			float CurrentFrame = static_cast<float>(glfwGetTime());
 			m_DeltaTime = CurrentFrame - LastFrame;
 			LastFrame = CurrentFrame;
-			CElenaInput::processInput(m_DeltaTime);
+			m_pWindowInput->processInput(m_DeltaTime);
 			vTickFunc();
-			CElenaUI::renderStart();
+			m_pWindowUI->renderStart();
 			if (m_pUiFunc != nullptr) m_pUiFunc();
-			CElenaUI::renderEnd();
+			m_pWindowUI->renderEnd();
 			m_pWindow->swapBuffers();
 			m_pWindow->pollEvents();
 		}
@@ -55,6 +54,6 @@ namespace Elena
 	CElenaApp::~CElenaApp()
 	{
 		CPrimitive::clear();
-		CElenaUI::destroy();
+		m_pWindowUI->destroy();
 	}
 }

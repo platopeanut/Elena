@@ -9,6 +9,7 @@
 #include <pipeline/DepthOnlyRenderPass.h>
 #include <pipeline/BaseRenderPass.h>
 #include <material/BlankMaterial.h>
+#include <material/CheckerMaterial.h>
 #include <material/PhongMaterial.h>
 #include <primitive/Primitive.h>
 #include <utils/MeshImporter.h>
@@ -22,7 +23,7 @@ int main()
 	App.setMainWindow(std::make_shared<Elena::CWindow>(800, 600, "Elena"));
 
 	const auto& pRootNode = std::make_shared<Elena::CNode>("Root");
-	const auto& pModelNode = Elena::CMeshImporter::import(Elena::CAssetsPath::getAssetsPath() + "models/nanosuit/nanosuit.obj", std::make_shared<Elena::CBlankMaterial>());
+	const auto& pModelNode = Elena::CMeshImporter::import(Elena::CAssetsPath::getAssetsPath() + "models/nanosuit/nanosuit.obj", std::make_shared<Elena::CCheckerMaterial>());
 	pModelNode->getTransform().setScale(glm::vec3(0.1f, 0.1f, 0.1f));
 	pRootNode->addChild(pModelNode);
 
@@ -38,7 +39,7 @@ int main()
 	pPlaneNode->getTransform().setScale(glm::vec3(10.0f, 10.0f, 10.0f));
 	const auto& pCubeNode = std::make_shared<Elena::CNode>("Cube");
 	pCubeNode->addMesh(std::make_shared<Elena::CMesh>(pCube, pMaterial));
-	pCubeNode->getTransform().setPosition(glm::vec3(1.0f, 0.5f, 1.0f));
+	pCubeNode->getTransform().setPosition(glm::vec3(1.0f, 0.6f, 1.0f));
 	pRootNode->addChild(pPlaneNode);
 	pRootNode->addChild(pCubeNode);
 
@@ -56,12 +57,12 @@ int main()
 	Elena::CTexture2DViewRenderPass TexViewPass(pDirectionalLight->getShadowMap());
 	Elena::CBaseRenderPass BaseRenderPass;
 
-	App.setUI([&]() {
-		if (ImGui::Button("Hello ImGUI"))
-		{
-			spdlog::info("Clicked Once!");
-		}
-	});
+	//App.setUI([&]() {
+	//	if (ImGui::Button("Hello ImGUI"))
+	//	{
+	//		spdlog::info("Clicked Once!");
+	//	}
+	//});
 
 	App.run([&]() {
 		DepthOnlyPass.render(Elena::CSceneManager::getInstance().getActiveScene());
