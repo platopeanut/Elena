@@ -32,6 +32,7 @@
     <ClCompile Include="3rdparty\imgui\imgui_tables.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="3rdparty\stb_image.cpp" />
+    <ClCompile Include="ui\CommonWidgets.cpp" />
     <ClCompile Include="ui\InspectorPanel.cpp" />
     <ClCompile Include="material\CheckerMaterial.cpp" />
     <ClCompile Include="material\BlankMaterial.cpp" />
@@ -72,6 +73,8 @@
     <ClInclude Include="3rdparty\imgui\imstb_rectpack.h" />
     <ClInclude Include="3rdparty\imgui\imstb_textedit.h" />
     <ClInclude Include="3rdparty\imgui\imstb_truetype.h" />
+    <ClInclude Include="3rdparty\imgui_plugins\imfilebrowser.h" />
+    <ClInclude Include="ui\CommonWidgets.h" />
     <ClInclude Include="ui\InspectorPanel.h" />
     <ClInclude Include="material\CheckerMaterial.h" />
     <ClInclude Include="material\BlankMaterial.h" />

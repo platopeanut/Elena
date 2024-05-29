@@ -132,6 +132,9 @@
     <ClCompile Include="ui\InspectorPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ui\CommonWidgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Window.h">
@@ -267,6 +270,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\InspectorPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui_plugins\imfilebrowser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\CommonWidgets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,10 @@
 
 namespace Elena
 {
-	CScene::CScene() :m_pRootNode{ nullptr }, m_CameraList{}, m_CameraControllerList{}, m_ActiveCameraIdx{ -1 }, m_LightList{} {}
+	CScene::CScene() :m_pRootNode{ nullptr }, m_CameraList{}, m_CameraControllerList{}, m_ActiveCameraIdx{ -1 }, m_LightList{} 
+	{
+		m_pRootNode = std::make_shared<CNode>("Default Root");
+	}
 
 	const std::shared_ptr<CCamera>& CScene::getActiveCamera() const
 	{

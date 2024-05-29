@@ -18,6 +18,7 @@ namespace Elena
 		void onMouseMovement(float vXOffset, float vYOffset);
 		void onMouseScroll(float vYOffset);
 	private:
+		void __setStyle() const;
 		void __renderStart() const;
 		void __renderEnd() const;
 		std::shared_ptr<CWindow> m_pWindow;
