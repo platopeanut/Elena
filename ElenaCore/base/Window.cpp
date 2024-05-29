@@ -19,7 +19,7 @@ namespace Elena
 		}
 		glfwSetWindowUserPointer(m_pWindow, this);
 		glfwMakeContextCurrent(m_pWindow);
-		
+
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
 			spdlog::error("Failed to initialize GLAD");

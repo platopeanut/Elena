@@ -8,9 +8,10 @@ namespace Elena
 {
 	void CBaseRenderPass::render(const std::shared_ptr<CScene>& vScene)
 	{
-		CFrameBuffer::bindDefaultFrameBuffer();
-		const auto& pWindow = CElenaApp::getInstance().getWindow();
-		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
+		//CFrameBuffer::bindDefaultFrameBuffer();
+		const auto& pFrameBuffer = _getFrameBuffer(vScene);
+		pFrameBuffer->bind();
+		pFrameBuffer->updateViewport();
 		glEnable(GL_DEPTH_TEST);
 		const auto& ClearColor = vScene->getActiveCamera()->getClearColor();
 		glClearColor(ClearColor.x, ClearColor.y, ClearColor.z, 1.0f);

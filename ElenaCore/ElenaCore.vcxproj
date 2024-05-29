@@ -32,11 +32,13 @@
     <ClCompile Include="3rdparty\imgui\imgui_tables.cpp" />
     <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="3rdparty\stb_image.cpp" />
+    <ClCompile Include="ui\InspectorPanel.cpp" />
     <ClCompile Include="material\CheckerMaterial.cpp" />
     <ClCompile Include="material\BlankMaterial.cpp" />
     <ClCompile Include="core\WindowUI.cpp" />
     <ClCompile Include="light\DirectionalLight.cpp" />
     <ClCompile Include="material\PhongMaterial.cpp" />
+    <ClCompile Include="ui\ScenePanel.cpp" />
     <ClCompile Include="utils\MeshImporter.cpp" />
     <ClCompile Include="pipeline\Texture2DViewRenderPass.cpp" />
     <ClCompile Include="utils\AssetsPath.cpp" />
@@ -70,10 +72,13 @@
     <ClInclude Include="3rdparty\imgui\imstb_rectpack.h" />
     <ClInclude Include="3rdparty\imgui\imstb_textedit.h" />
     <ClInclude Include="3rdparty\imgui\imstb_truetype.h" />
+    <ClInclude Include="ui\InspectorPanel.h" />
     <ClInclude Include="material\CheckerMaterial.h" />
     <ClInclude Include="material\BlankMaterial.h" />
     <ClInclude Include="core\WindowUI.h" />
     <ClInclude Include="material\PhongMaterial.h" />
+    <ClInclude Include="ui\ScenePanel.h" />
+    <ClInclude Include="ui\Panel.h" />
     <ClInclude Include="utils\MeshImporter.h" />
     <ClInclude Include="utils\def.h" />
     <ClInclude Include="light\DirectionalLight.h" />

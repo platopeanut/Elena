@@ -3,7 +3,8 @@
 
 namespace Elena
 {
-	CRenderBuffer::CRenderBuffer(int vWidth, int vHeight, GLenum vInternalformat) :m_RenderBufferID{ 0 }
+	CRenderBuffer::CRenderBuffer(int vWidth, int vHeight, GLenum vInternalformat)
+		:m_RenderBufferID{ 0 }, m_Width(vWidth), m_Height(vHeight)
 	{
 		GL_SAFE_CALL(glGenRenderbuffers(1, &m_RenderBufferID));
 		GL_SAFE_CALL(glBindRenderbuffer(GL_RENDERBUFFER, m_RenderBufferID));

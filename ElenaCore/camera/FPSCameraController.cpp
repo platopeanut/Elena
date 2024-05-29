@@ -25,9 +25,9 @@ namespace Elena
 		m_pFPSCamera->__processMouseScroll(vYoffset);
 	}
 
-	void CFPSCameraController::processViewportSizeChange(float vAspect)
+	void CFPSCameraController::processViewportSizeChange(int vWidth, int vHeight)
 	{
-		m_pFPSCamera->setAspect(vAspect);
+		m_pFPSCamera->__updateViewport(vWidth, vHeight);
 	}
 
 	void CFPSCameraController::tick(float vDeltaTime)

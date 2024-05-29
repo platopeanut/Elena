@@ -1,6 +1,9 @@
 #include "ElenaApp.h"
+#include <imgui/imgui.h>
 #include <spdlog/spdlog.h>
 #include "SceneManager.h"
+#include "ui/ScenePanel.h"
+#include "ui/InspectorPanel.h"
 #include "primitive/Primitive.h"
 
 namespace Elena
@@ -14,19 +17,15 @@ namespace Elena
 	void CElenaApp::setMainWindow(const std::shared_ptr<CWindow>& vWindow)
 	{
 		m_pWindow = vWindow;
-		m_pWindowInput = std::make_shared<CWindowInput>(vWindow);
 		m_pWindowUI = std::make_shared<CWindowUI>(vWindow);
-		m_pWindowUI->init();
+		m_pWindowInput = std::make_shared<CWindowInput>(vWindow, m_pWindowUI);
+		m_pWindowUI->addPanel(std::make_shared<CScenePanel>(m_pWindowInput, vWindow->getWidth(), vWindow->getHeight()));
+		m_pWindowUI->addPanel(std::make_shared<CInspectorPanel>());
 	}
 
-	const std::shared_ptr<CWindow>& CElenaApp::getWindow() const
+	void CElenaApp::run()
 	{
-		_ASSERTE(m_pWindow != nullptr);
-		return m_pWindow;
-	}
-
-	void CElenaApp::run(std::function<void()> vTickFunc)
-	{
+		__init();
 		spdlog::info("Start Render :)");
 		float LastFrame = 0.0f;
 		while (!m_pWindow->shouldClose())
@@ -34,26 +33,27 @@ namespace Elena
 			float CurrentFrame = static_cast<float>(glfwGetTime());
 			m_DeltaTime = CurrentFrame - LastFrame;
 			LastFrame = CurrentFrame;
-			m_pWindowInput->processInput(m_DeltaTime);
-			vTickFunc();
-			m_pWindowUI->renderStart();
-			if (m_pUiFunc != nullptr) m_pUiFunc();
-			m_pWindowUI->renderEnd();
+			m_pRenderFunc();
+			m_pWindowUI->render(m_DeltaTime);
 			m_pWindow->swapBuffers();
 			m_pWindow->pollEvents();
 		}
 	}
 
-	void CElenaApp::setUI(std::function<void()> vUiFunc)
+	void CElenaApp::setRender(std::function<void()> vRenderFunc)
 	{
-		m_pUiFunc = std::move(vUiFunc);
+		m_pRenderFunc = std::move(vRenderFunc);
 	}
 
-	CElenaApp::CElenaApp() : m_pWindow(nullptr), m_DeltaTime(0.0f), m_pUiFunc(nullptr) {}
+	CElenaApp::CElenaApp() : m_pWindow(nullptr), m_DeltaTime(0.0f) {}
 	
 	CElenaApp::~CElenaApp()
 	{
 		CPrimitive::clear();
-		m_pWindowUI->destroy();
+	}
+
+	void CElenaApp::__init()
+	{
+		m_pWindowUI->init();
 	}
 }

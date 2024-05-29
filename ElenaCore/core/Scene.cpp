@@ -6,14 +6,16 @@ namespace Elena
 
 	const std::shared_ptr<CCamera>& CScene::getActiveCamera() const
 	{
-		_ASSERTE(m_ActiveCameraIdx >= 0 && m_ActiveCameraIdx < m_CameraList.size());
-		return m_CameraList[m_ActiveCameraIdx];
+		if (m_ActiveCameraIdx >= 0 && m_ActiveCameraIdx < m_CameraList.size())
+			return m_CameraList[m_ActiveCameraIdx];
+		return nullptr;
 	}
 
 	const std::shared_ptr<CCameraController>& CScene::getActiveCameraController() const
 	{
-		_ASSERTE(m_ActiveCameraIdx >= 0 && m_ActiveCameraIdx < m_CameraList.size());
-		return m_CameraControllerList[m_ActiveCameraIdx];
+		if (m_ActiveCameraIdx >= 0 && m_ActiveCameraIdx < m_CameraList.size())
+			return m_CameraControllerList[m_ActiveCameraIdx];
+		return nullptr;
 	}
 
 	void CScene::addCamera(const std::shared_ptr<CCamera>& vCamera, const std::shared_ptr<CCameraController>& vCameraController)

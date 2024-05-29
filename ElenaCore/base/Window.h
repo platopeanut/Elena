@@ -20,7 +20,6 @@ namespace Elena
 		void setWidth(unsigned int vWidth) { m_Width = vWidth; }
 		// setHeight only be used for CElenaInput::__framebufferSizeCallback
 		void setHeight(unsigned int vHeight) { m_Height = vHeight; }
-		float getAspect() const { return (float)m_Width / (float)m_Height; }
 		GLFWwindow* getWindow() const { return m_pWindow; }
 		static CWindow* getWindowByNative(GLFWwindow* vWindow);
 	private:

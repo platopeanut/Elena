@@ -10,11 +10,15 @@ namespace Elena
 
 	const std::shared_ptr<CScene>& CSceneManager::getActiveScene() const
 	{
-		_ASSERTE(m_ActiveSceneIdx >= 0 && m_ActiveSceneIdx < m_SceneList.size());
-		return m_SceneList[m_ActiveSceneIdx];
+		if (m_ActiveSceneIdx >= 0 && m_ActiveSceneIdx < m_SceneList.size())
+			return m_SceneList[m_ActiveSceneIdx];
+		return nullptr;
 	}
 
-	CSceneManager::CSceneManager() :m_SceneList{}, m_ActiveSceneIdx{ -1 } {}
+	CSceneManager::CSceneManager() :m_SceneList{}, m_ActiveSceneIdx{ -1 }
+	{
+		addScene(std::make_shared<CScene>());
+	}
 
 	void CSceneManager::addScene(const std::shared_ptr<CScene>& vScene)
 	{

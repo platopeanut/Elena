@@ -3,13 +3,14 @@
 
 namespace Elena
 {
-	CFPSCamera::CFPSCamera(float vAspect, const glm::vec3& vPosition, float vNear, float vFar)
+	CFPSCamera::CFPSCamera(const glm::vec3& vPosition, float vNear, float vFar)
 		:m_Position(vPosition), m_Front(0.0f, 0.0f, -1.0f), m_Up(0.0f, 1.0f, 0.0f), m_Right{}, m_WorldUp{},
 		m_Yaw(-90.0f), m_Pitch(0.0f),
 		m_MovementSpeed(2.5f), m_MouseSensitivity(0.1f), m_Zoom(45.0f),
-		m_Aspect(vAspect), m_Near(vNear), m_Far(vFar),
+		m_Aspect(1.0f), m_Near(vNear), m_Far(vFar),
 		m_ClearColor(0.2f, 0.3f, 0.47f)
 	{
+		m_pFrameBuffer = std::make_shared<CFrameBuffer>();	
 		m_WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		__updateCameraVectors();
 	}
@@ -79,5 +80,11 @@ namespace Elena
 		m_Front = glm::normalize(Front);
 		m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
 		m_Up = glm::normalize(glm::cross(m_Right, m_Front));
+	}
+
+	void CFPSCamera::__updateViewport(int vWidth, int vHeight)
+	{
+		m_pFrameBuffer->initStandard(vWidth, vHeight);
+		m_Aspect = (float)vWidth / (float)vHeight;
 	}
 }

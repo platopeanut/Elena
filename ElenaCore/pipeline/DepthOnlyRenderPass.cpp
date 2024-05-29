@@ -23,7 +23,7 @@ namespace Elena
 			if (pLight->getShadowType() == CLight::EShadowType::NO_SHADOW)
 				continue;
 			const auto& pShadowMap = pLight->getShadowMap();
-			CFrameBuffer::setAttachmentTexture2D(GL_DEPTH_ATTACHMENT, pShadowMap->getTextureID());
+			m_FrameBuffer.setAttachmentTexture2D(GL_DEPTH_ATTACHMENT, pShadowMap);
 			CFrameBuffer::check();
 
 			glViewport(0, 0, pShadowMap->getWidth(), pShadowMap->getHeight());

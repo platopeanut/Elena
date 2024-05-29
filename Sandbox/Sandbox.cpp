@@ -43,11 +43,11 @@ int main()
 	pRootNode->addChild(pPlaneNode);
 	pRootNode->addChild(pCubeNode);
 
-	auto pFPSCamera = std::make_shared<Elena::CFPSCamera>(App.getWindow()->getAspect());
+	auto pFPSCamera = std::make_shared<Elena::CFPSCamera>();
 	auto pFPSCameraController = std::make_shared<Elena::CFPSCameraController>(pFPSCamera);
 	auto pDirectionalLight = std::make_shared<Elena::CDirectionalLight>(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(0.5f, -1.0f, 0.5f), 10.0f, 10.0f);
 	//pDirectionalLight->setShadowType(Elena::CLight::EShadowType::NO_SHADOW);
-	auto pScene = std::make_shared<Elena::CScene>();
+	const auto& pScene = Elena::CSceneManager::getInstance().getActiveScene();
 	pScene->setRootNode(pRootNode);
 	pScene->addCamera(pFPSCamera, pFPSCameraController);
 	pScene->addLight(pDirectionalLight);
@@ -56,18 +56,15 @@ int main()
 	Elena::CDepthOnlyRenderPass DepthOnlyPass;
 	Elena::CTexture2DViewRenderPass TexViewPass(pDirectionalLight->getShadowMap());
 	Elena::CBaseRenderPass BaseRenderPass;
-
-	//App.setUI([&]() {
-	//	if (ImGui::Button("Hello ImGUI"))
-	//	{
-	//		spdlog::info("Clicked Once!");
-	//	}
-	//});
-
-	App.run([&]() {
+	App.setRender([&]() {
 		DepthOnlyPass.render(Elena::CSceneManager::getInstance().getActiveScene());
-		TexViewPass.render(nullptr);
+		//TexViewPass.render(Elena::CSceneManager::getInstance().getActiveScene());
 		BaseRenderPass.render(Elena::CSceneManager::getInstance().getActiveScene());
 	});
+	App.run();
 	return 0;
 }
+
+// Camera的Aspect以及FrameBuffer的width和height应该是Scene Panel
+// Scene Panel 奇怪的width height
+// WindowUI设置清屏导致的闪烁

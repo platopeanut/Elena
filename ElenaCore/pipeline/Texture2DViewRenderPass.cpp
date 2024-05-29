@@ -14,9 +14,10 @@ namespace Elena
 
 	void CTexture2DViewRenderPass::render(const std::shared_ptr<CScene>& vScene)
 	{
-		CFrameBuffer::bindDefaultFrameBuffer();
-		const auto& pWindow = CElenaApp::getInstance().getWindow();
-		glViewport(0, 0, pWindow->getWidth(), pWindow->getHeight());
+		//CFrameBuffer::bindDefaultFrameBuffer();
+		const auto& pFrameBuffer = _getFrameBuffer(vScene);
+		pFrameBuffer->bind();
+		pFrameBuffer->updateViewport();
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDisable(GL_DEPTH_TEST);
