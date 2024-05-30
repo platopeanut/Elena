@@ -26,18 +26,18 @@ namespace Elena
 		bool ReceiveShadow = m_ReceiveShadow;
 		if (pMainLight->getShadowType() == CLight::EShadowType::NO_SHADOW) ReceiveShadow = false;
 		m_Shader->use();
-		m_Shader->setMat4("uModel", vNode->getModelMatrix());
-		m_Shader->setMat4("uView", pCamera->getViewMatrix());
-		m_Shader->setMat4("uProjection", pCamera->getProjectionMatrix());
-		m_Shader->setMat4("uLightMatrix", pMainLight->getLightMatrix());
+		m_Shader->setUniform("uModel", vNode->getModelMatrix());
+		m_Shader->setUniform("uView", pCamera->getViewMatrix());
+		m_Shader->setUniform("uProjection", pCamera->getProjectionMatrix());
+		m_Shader->setUniform("uLightMatrix", pMainLight->getLightMatrix());
 
-		m_Shader->setVec3("uViewPos", pCamera->getPosition());
-		m_Shader->setBool("uReceiveShadow", ReceiveShadow);
-		m_Shader->setFloat("uMaterial._Shininess", m_Shininess);
-		m_Shader->setVec3("uLight._Direction", pMainLight->getDirection());
-		m_Shader->setVec3("uLight._Ambient", pMainLight->getColor() * 0.2f);
-		m_Shader->setVec3("uLight._Diffuse", pMainLight->getColor() * 0.5f);
-		m_Shader->setVec3("uLight._Specular", pMainLight->getColor());
+		m_Shader->setUniform("uViewPos", pCamera->getPosition());
+		m_Shader->setUniform("uReceiveShadow", ReceiveShadow);
+		m_Shader->setUniform("uMaterial._Shininess", m_Shininess);
+		m_Shader->setUniform("uLight._Direction", pMainLight->getDirection());
+		m_Shader->setUniform("uLight._Ambient", pMainLight->getColor() * 0.2f);
+		m_Shader->setUniform("uLight._Diffuse", pMainLight->getColor() * 0.5f);
+		m_Shader->setUniform("uLight._Specular", pMainLight->getColor());
 
 		glActiveTexture(GL_TEXTURE0);
 		pMainLight->getShadowMap()->bind();
@@ -45,8 +45,8 @@ namespace Elena
 		m_pDiffuseTexture->bind();
 		glActiveTexture(GL_TEXTURE2);
 		m_pSpecularTexture->bind();
-		m_Shader->setInt("uShadowMap", 0);
-		m_Shader->setInt("uMaterial._Diffuse", 1);
-		m_Shader->setInt("uMaterial._Specular", 2);
+		m_Shader->setUniform("uShadowMap", 0);
+		m_Shader->setUniform("uMaterial._Diffuse", 1);
+		m_Shader->setUniform("uMaterial._Specular", 2);
 	}
 }

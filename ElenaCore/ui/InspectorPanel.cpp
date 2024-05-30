@@ -32,10 +32,8 @@ namespace Elena
 		{
 			__showSceneTree(CSceneManager::getInstance().getActiveScene()->getRootNode());
 		}
-		if (ImGui::CollapsingHeader("Transform"))
-		{
-			__showTransform();
-		}
+		__showTransform();
+		__showMaterial();
 		ImGui::End();
 
 		m_FileDialog.Display();
@@ -82,13 +80,30 @@ namespace Elena
 		static float Position[3];
 		static float Rotation[3];
 		static float Scale[3];
-		if (m_pCurrSelectedNode == nullptr) return;
-		auto& Transform = m_pCurrSelectedNode->getTransform();
-		if (CCommonWidgets::showInputFloat3("Position", Position, Transform.getPosition()))
-			Transform.setPosition(Position);
-		if (CCommonWidgets::showInputFloat3("Rotation", Rotation, Transform.getRotation()))
-			Transform.setRotation(Rotation);
-		if (CCommonWidgets::showInputFloat3("Scale", Scale, Transform.getScale()))
-			Transform.setScale(Scale);
+		if (ImGui::CollapsingHeader("Transform"))
+		{
+			if (m_pCurrSelectedNode == nullptr) return;
+			auto& Transform = m_pCurrSelectedNode->getTransform();
+			if (CCommonWidgets::showInputFloat3("Position", Position, Transform.getPosition()))
+				Transform.setPosition(Position);
+			if (CCommonWidgets::showInputFloat3("Rotation", Rotation, Transform.getRotation()))
+				Transform.setRotation(Rotation);
+			if (CCommonWidgets::showInputFloat3("Scale", Scale, Transform.getScale()))
+				Transform.setScale(Scale);
+		}
+	}
+
+	void CInspectorPanel::__showMaterial()
+	{
+		if (ImGui::CollapsingHeader("Material"))
+		{
+			if (m_pCurrSelectedNode == nullptr) return;
+			const auto& MeshList = m_pCurrSelectedNode->getMeshList();
+			for (const auto& pMesh : MeshList)
+			{
+				const auto& pMaterial = pMesh->getMaterial();
+				pMaterial->getProperties().showGui();
+			}
+		}
 	}
 }

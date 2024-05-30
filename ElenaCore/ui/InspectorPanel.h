@@ -18,6 +18,7 @@ namespace Elena
 		void __loadModelFormFile() const;
 		void __showSceneTree(const std::shared_ptr<CNode>& vNode);
 		void __showTransform();
+		void __showMaterial();
 		ImGui::FileBrowser m_FileDialog;
 		std::optional<std::string> m_FilePath;
 		std::shared_ptr<CNode> m_pCurrSelectedNode;

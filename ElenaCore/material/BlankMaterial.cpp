@@ -20,10 +20,10 @@ namespace Elena
 		const auto& pCamera = CSceneManager::getInstance().getActiveScene()->getActiveCamera();
 		const auto& pMainLight = CSceneManager::getInstance().getActiveScene()->getLights()[0];
 		m_Shader->use();
-		m_Shader->setMat4("uModel", vNode->getModelMatrix());
-		m_Shader->setMat4("uView", pCamera->getViewMatrix());
-		m_Shader->setMat4("uProjection", pCamera->getProjectionMatrix());
-		m_Shader->setVec3("uLightDirection", pMainLight->getDirection());
-		m_Shader->setVec3("uLightColor", pMainLight->getColor());
+		m_Shader->setUniform("uModel", vNode->getModelMatrix());
+		m_Shader->setUniform("uView", pCamera->getViewMatrix());
+		m_Shader->setUniform("uProjection", pCamera->getProjectionMatrix());
+		m_Shader->setUniform("uLightDirection", pMainLight->getDirection());
+		m_Shader->setUniform("uLightColor", pMainLight->getColor());
 	}
 }

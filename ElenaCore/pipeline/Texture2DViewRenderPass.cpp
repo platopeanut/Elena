@@ -25,8 +25,8 @@ namespace Elena
 		glActiveTexture(GL_TEXTURE0);
 		m_pTexture2D->bind();
 		m_Shader.use();
-		m_Shader.setInt("uTexture", 0);
-		m_Shader.setInt("uChannels", m_pTexture2D->getChannels());
+		m_Shader.setUniform("uTexture", 0);
+		m_Shader.setUniform("uChannels", m_pTexture2D->getChannels());
 
 		m_pQuadVertexBuffer->draw();
 	}

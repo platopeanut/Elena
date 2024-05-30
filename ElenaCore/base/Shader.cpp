@@ -29,27 +29,32 @@ namespace Elena
 		GL_SAFE_CALL(glUseProgram(m_ShaderID));
 	}
 
-	void CShader::setInt(const std::string& vName, int vValue) const
+	void CShader::setUniform(const std::string& vName, int vValue) const
 	{
 		GL_SAFE_CALL(glUniform1i(glGetUniformLocation(m_ShaderID, vName.c_str()), vValue));
 	}
 
-	void CShader::setBool(const std::string& vName, bool vValue) const
+	void CShader::setUniform(const std::string& vName, bool vValue) const
 	{
 		GL_SAFE_CALL(glUniform1i(glGetUniformLocation(m_ShaderID, vName.c_str()), (int)vValue));
 	}
 
-	void CShader::setFloat(const std::string& vName, float vValue) const
+	void CShader::setUniform(const std::string& vName, float vValue) const
 	{
 		GL_SAFE_CALL(glUniform1f(glGetUniformLocation(m_ShaderID, vName.c_str()), vValue));
 	}
 
-	void CShader::setVec3(const std::string& vName, const glm::vec3& vValue) const
+	void CShader::setUniform(const std::string& vName, const glm::vec3& vValue) const
 	{
 		GL_SAFE_CALL(glUniform3fv(glGetUniformLocation(m_ShaderID, vName.c_str()), 1, &vValue[0]));
 	}
 
-	void CShader::setMat4(const std::string& vName, const glm::mat4& vMat) const
+	void CShader::setUniform(const std::string& vName, const glm::vec4& vValue) const
+	{
+		GL_SAFE_CALL(glUniform4fv(glGetUniformLocation(m_ShaderID, vName.c_str()), 1, &vValue[0]));
+	}
+
+	void CShader::setUniform(const std::string& vName, const glm::mat4& vMat) const
 	{
 		GL_SAFE_CALL(glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, vName.c_str()), 1, GL_FALSE, &vMat[0][0]));
 	}

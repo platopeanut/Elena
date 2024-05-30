@@ -30,7 +30,7 @@ namespace Elena
 			glEnable(GL_DEPTH_TEST);
 			glClear(GL_DEPTH_BUFFER_BIT);
 
-			m_Shader.setMat4("uLightMatrix", pLight->getLightMatrix());
+			m_Shader.setUniform("uLightMatrix", pLight->getLightMatrix());
 
 			std::queue<std::shared_ptr<CNode>> Queue;
 			Queue.push(vScene->getRootNode());
@@ -41,7 +41,7 @@ namespace Elena
 
 				for (const auto& pMesh : pNode->getMeshList())
 				{
-					m_Shader.setMat4("uModel", pNode->getModelMatrix());
+					m_Shader.setUniform("uModel", pNode->getModelMatrix());
 					pMesh->getVertexBuffer()->draw();
 				}
 				for (const auto& pChildNode : pNode->getChildNodes())
