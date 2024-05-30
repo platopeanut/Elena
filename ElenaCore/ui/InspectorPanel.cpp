@@ -9,6 +9,7 @@
 #include "utils/MeshImporter.h"
 #include "CommonWidgets.h"
 #include "FileDialog.h"
+#include <utils/AssetsPath.h>
 
 namespace Elena
 {
@@ -48,7 +49,8 @@ namespace Elena
 	void CInspectorPanel::__loadModelFormFile() const
 	{
 		const auto& pDefaultTex = std::make_shared<CTexture2D>(glm::vec3(1.0f, 1.0f, 1.0f));
-		const auto& pNode = CMeshImporter::import(m_FilePath.value(), std::make_shared<Elena::CPhongMaterial>(pDefaultTex, pDefaultTex, 32.0f));
+		const auto& pFaceTex = std::make_shared<CTexture2D>(CAssetsPath::getAssetsPath() + "textures/awesomeface.png");
+		const auto& pNode = CMeshImporter::import(m_FilePath.value(), std::make_shared<Elena::CPhongMaterial>(pFaceTex, pDefaultTex, 32.0f));
 		CSceneManager::getInstance().getActiveScene()->getRootNode()->addChild(pNode);
 	}
 

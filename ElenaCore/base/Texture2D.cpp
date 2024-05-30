@@ -24,6 +24,7 @@ namespace Elena
 				spdlog::warn("Texture channels cannot support, which is {}, path is {}", m_NrChannels, vTexturePath);
 			}
 			GL_SAFE_CALL(glTexImage2D(GL_TEXTURE_2D, 0, Format, m_Width, m_Height, 0, Format, GL_UNSIGNED_BYTE, pData));
+			GL_SAFE_CALL(glGenerateMipmap(GL_TEXTURE_2D));
 		}
 		else
 		{
