@@ -15,6 +15,17 @@ namespace Elena
 				CAssetsPath::getBuiltInShaderPath("material/phong.vert"),
 				CAssetsPath::getBuiltInShaderPath("material/phong.frag")	
 			);
+		const auto& pPropDiffuse = std::make_shared<CPropertyTex2D>("uMaterial._Diffuse", vDiffuseTexture, 1);
+		pPropDiffuse->setUpdateCallback([&](const std::shared_ptr<CTexture2D>& vTexture) {
+			m_pDiffuseTexture = vTexture;
+		});
+		const auto& pPropSpecular = std::make_shared<CPropertyTex2D>("uMaterial._Specular", vSpecularTexture, 2);
+		pPropSpecular->setUpdateCallback([&](const std::shared_ptr<CTexture2D>& vTexture) {
+			m_pSpecularTexture = vTexture;
+		});
+		m_Properties.addProperty(pPropDiffuse);
+		m_Properties.addProperty(pPropSpecular);
+		m_Properties.addProperty(std::make_shared<CPropertyFloat>("uMaterial._Shininess", vShininess));
 	}
 
 	void CPhongMaterial::use(const std::shared_ptr<CNode>& vNode) const
@@ -33,7 +44,7 @@ namespace Elena
 
 		m_Shader->setUniform("uViewPos", pCamera->getPosition());
 		m_Shader->setUniform("uReceiveShadow", ReceiveShadow);
-		m_Shader->setUniform("uMaterial._Shininess", m_Shininess);
+		//m_Shader->setUniform("uMaterial._Shininess", m_Shininess);
 		m_Shader->setUniform("uLight._Direction", pMainLight->getDirection());
 		m_Shader->setUniform("uLight._Ambient", pMainLight->getColor() * 0.2f);
 		m_Shader->setUniform("uLight._Diffuse", pMainLight->getColor() * 0.5f);
@@ -46,7 +57,8 @@ namespace Elena
 		glActiveTexture(GL_TEXTURE2);
 		m_pSpecularTexture->bind();
 		m_Shader->setUniform("uShadowMap", 0);
-		m_Shader->setUniform("uMaterial._Diffuse", 1);
-		m_Shader->setUniform("uMaterial._Specular", 2);
+		//m_Shader->setUniform("uMaterial._Diffuse", 1);
+		//m_Shader->setUniform("uMaterial._Specular", 2);
+		m_Properties.setUniform(m_Shader);
 	}
 }

@@ -1,8 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <imgui/imgui.h>
-#include <imgui_plugins/imfilebrowser.h>
 #include "core/Node.h"
 #include "Panel.h"
 
@@ -19,7 +17,6 @@ namespace Elena
 		void __showSceneTree(const std::shared_ptr<CNode>& vNode);
 		void __showTransform();
 		void __showMaterial();
-		ImGui::FileBrowser m_FileDialog;
 		std::optional<std::string> m_FilePath;
 		std::shared_ptr<CNode> m_pCurrSelectedNode;
 	};

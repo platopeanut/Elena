@@ -6,11 +6,12 @@ in vec3 vNormal;
 
 uniform vec3 uLightDirection;
 uniform vec3 uLightColor;
+uniform vec4 uDiffuseColor;
 
 void main()
 {
     vec3 Normal = normalize(vNormal);
     vec3 LightDir = normalize(-uLightDirection);
-    float Diffuse = max(dot(Normal, LightDir), 0.5);
-    oFragColor = vec4(uLightColor * Diffuse, 1.0);
+    vec3 Diffuse = max(dot(Normal, LightDir), 0.0) * uDiffuseColor.xyz * uLightColor.xyz;
+    oFragColor = vec4(Diffuse, 1.0);
 }

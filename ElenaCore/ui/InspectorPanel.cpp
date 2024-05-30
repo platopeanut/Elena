@@ -4,14 +4,16 @@
 #include <queue>
 #include "core/SceneManager.h"
 #include "material/CheckerMaterial.h"
+#include "material/BlankMaterial.h"
+#include "material/PhongMaterial.h"
 #include "utils/MeshImporter.h"
 #include "CommonWidgets.h"
+#include "FileDialog.h"
 
 namespace Elena
 {
 	CInspectorPanel::CInspectorPanel() :m_pCurrSelectedNode(nullptr)
 	{
-		m_FileDialog.SetTitle("Open File");
 	}
 
 	void CInspectorPanel::render(float vDeltaTime)
@@ -21,9 +23,13 @@ namespace Elena
 
 		if (ImGui::CollapsingHeader("File"))
 		{
-			if (ImGui::Button("Open File"))
+			if (ImGui::Button("Open Model File"))
 			{
-				m_FileDialog.Open();
+				CFileDialog::getInstance().setTypeFilters({ ".obj", ".fbx" });
+				CFileDialog::getInstance().open([&](const std::string& vFilePath) {
+					m_FilePath.emplace(vFilePath);
+					__loadModelFormFile();
+				});
 			}
 			ImGui::SameLine(0, 5.0f);
 			ImGui::Text(m_FilePath.has_value() ? m_FilePath.value().c_str() : "None");
@@ -35,19 +41,14 @@ namespace Elena
 		__showTransform();
 		__showMaterial();
 		ImGui::End();
-
-		m_FileDialog.Display();
-		if (m_FileDialog.HasSelected())
-		{
-			m_FilePath.emplace(m_FileDialog.GetSelected().string());
-			m_FileDialog.ClearSelected();
-			__loadModelFormFile();
-		}
+		CFileDialog::getInstance().display();
+		CFileDialog::getInstance().dispatch();
 	}
 
 	void CInspectorPanel::__loadModelFormFile() const
 	{
-		const auto& pNode = CMeshImporter::import(m_FilePath.value(), std::make_shared<Elena::CCheckerMaterial>());
+		const auto& pDefaultTex = std::make_shared<CTexture2D>(glm::vec3(1.0f, 1.0f, 1.0f));
+		const auto& pNode = CMeshImporter::import(m_FilePath.value(), std::make_shared<Elena::CPhongMaterial>(pDefaultTex, pDefaultTex, 32.0f));
 		CSceneManager::getInstance().getActiveScene()->getRootNode()->addChild(pNode);
 	}
 

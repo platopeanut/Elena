@@ -12,6 +12,6 @@ namespace Elena
 		// Inherited via CMaterial
 		void use(const std::shared_ptr<CNode>& vNode) const override;
 	private:
-		static std::shared_ptr<CShader> m_Shader;
+		static std::shared_ptr<CShader> m_pShader;
 	};
 }

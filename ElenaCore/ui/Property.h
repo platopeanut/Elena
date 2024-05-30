@@ -3,8 +3,10 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <functional>
 #include <glm/glm.hpp>
 #include "base/Shader.h"
+#include "base/Texture2D.h"
 
 namespace Elena
 {
@@ -88,5 +90,36 @@ namespace Elena
 	private:
 		float m_RawValue[4];
 		glm::vec4 m_Value;
+	};
+
+	class CPropertyColor : public CProperty
+	{
+	public:
+		CPropertyColor(const std::string& vName, const glm::vec4& vValue)
+			:CProperty(vName), m_Value(vValue), m_RawValue{ vValue[0], vValue[1], vValue[2], vValue[3] } {}
+		// Inherited via CProperty
+		bool showGui() override;
+		void setUniform(const std::shared_ptr<CShader>& vShader) const override { vShader->setUniform(getName(), m_Value); }
+	private:
+		float m_RawValue[4];
+		glm::vec4 m_Value;
+	};
+
+	class CPropertyTex2D : public CProperty
+	{
+	public:
+		CPropertyTex2D(const std::string& vName, const std::shared_ptr<CTexture2D>& vTexture2D, int vBindID)
+			: CProperty(vName), m_pTexture2D(vTexture2D), m_BindID(vBindID) {}
+		// Inherited via CProperty
+		bool showGui() override;
+		void setUniform(const std::shared_ptr<CShader>& vShader) const override
+		{
+			vShader->setUniform(getName(), m_BindID);
+		}
+		void setUpdateCallback(std::function<void(const std::shared_ptr<CTexture2D>&)> vFnCallback);
+	private:
+		int m_BindID;
+		std::shared_ptr<CTexture2D> m_pTexture2D;
+		std::function<void(const std::shared_ptr<CTexture2D>&)> m_FnCallback;
 	};
 }
