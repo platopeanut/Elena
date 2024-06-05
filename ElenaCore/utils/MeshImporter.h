@@ -12,10 +12,16 @@ namespace Elena
 	class CMeshImporter
 	{
 	public:
-		static std::shared_ptr<CNode> import(const std::string& vModelPath, const std::shared_ptr<CMaterial>& vMaterial);
+		enum class EMaterialType
+		{
+			PHONG
+		};
+	public:
+		static std::shared_ptr<CNode> import(const std::string& vModelPath, EMaterialType vMatType);
 	private:
-		static std::shared_ptr<CNode> __processNode(aiNode* vAiNode, const aiScene* vAiScene);
-		static std::shared_ptr<CMesh> __processMesh(aiMesh* vAiMesh, const aiScene* vAiScene);
-		static std::shared_ptr<CMaterial> m_CurrMaterial;
+		static std::shared_ptr<CNode> __processNode(aiNode* vAiNode, const aiScene* vAiScene, EMaterialType vMatType);
+		static std::shared_ptr<CMesh> __processMesh(aiMesh* vAiMesh, const aiScene* vAiScene, EMaterialType vMatType);
+		static std::shared_ptr<CTexture2D> m_pDiffuseTex;
+		static std::shared_ptr<CTexture2D> m_pSpecularTex;
 	};
 }

@@ -3,13 +3,10 @@
 #include <spdlog/spdlog.h>
 #include <queue>
 #include "core/SceneManager.h"
-#include "material/CheckerMaterial.h"
-#include "material/BlankMaterial.h"
-#include "material/PhongMaterial.h"
 #include "utils/MeshImporter.h"
+#include "utils/AssetsPath.h"
 #include "CommonWidgets.h"
 #include "FileDialog.h"
-#include <utils/AssetsPath.h>
 
 namespace Elena
 {
@@ -48,9 +45,7 @@ namespace Elena
 
 	void CInspectorPanel::__loadModelFormFile() const
 	{
-		const auto& pDefaultTex = std::make_shared<CTexture2D>(glm::vec3(1.0f, 1.0f, 1.0f));
-		const auto& pFaceTex = std::make_shared<CTexture2D>(CAssetsPath::getAssetsPath() + "textures/awesomeface.png");
-		const auto& pNode = CMeshImporter::import(m_FilePath.value(), std::make_shared<Elena::CPhongMaterial>(pFaceTex, pDefaultTex, 32.0f));
+		const auto& pNode = CMeshImporter::import(m_FilePath.value(), CMeshImporter::EMaterialType::PHONG);
 		CSceneManager::getInstance().getActiveScene()->getRootNode()->addChild(pNode);
 	}
 
@@ -107,6 +102,17 @@ namespace Elena
 				const auto& pMaterial = pMesh->getMaterial();
 				pMaterial->getProperties().showGui();
 			}
+		}
+	}
+
+	void CInspectorPanel::__showLighting()
+	{
+		if (ImGui::CollapsingHeader("Lighting"))
+		{
+			//const auto& Lights = CSceneManager::getInstance().getActiveScene()->getLights();
+			//for (const auto& pLight : Lights)
+			//{
+			//}
 		}
 	}
 }

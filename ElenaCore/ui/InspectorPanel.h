@@ -17,6 +17,7 @@ namespace Elena
 		void __showSceneTree(const std::shared_ptr<CNode>& vNode);
 		void __showTransform();
 		void __showMaterial();
+		void __showLighting();
 		std::optional<std::string> m_FilePath;
 		std::shared_ptr<CNode> m_pCurrSelectedNode;
 	};

@@ -15,7 +15,10 @@ namespace Elena
 		EShadowType getShadowType() const override { return m_ShadowType; }
 		const std::shared_ptr<CTexture2D>& getShadowMap() const override { return m_pShadowMap; }
 		glm::mat4 getLightMatrix() const override;
-		void setShadowType(EShadowType vShadowType) { m_ShadowType = vShadowType; }
+		void setColor(const glm::vec3& vColor) override { m_LightColor = vColor; }
+		void setPosition(const glm::vec3& vPosition) override { m_Position = vPosition; }
+		void setDirection(const glm::vec3& vDirection) override { m_Direction = vDirection; }
+		void setShadowType(EShadowType vShadowType) override { m_ShadowType = vShadowType; }
 	private:
 		glm::vec3 m_Position;
 		glm::vec3 m_Direction;

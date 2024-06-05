@@ -1,13 +1,24 @@
 #include "MeshImporter.h"
 #include <vector>
 #include <spdlog/spdlog.h>
+#include "material/PhongMaterial.h"
 
 namespace Elena
 {
-	std::shared_ptr<CMaterial> CMeshImporter::m_CurrMaterial{ nullptr };
+	std::shared_ptr<CTexture2D> CMeshImporter::m_pDiffuseTex{ nullptr };
+	std::shared_ptr<CTexture2D> CMeshImporter::m_pSpecularTex{ nullptr };
 
-	std::shared_ptr<CNode> CMeshImporter::import(const std::string& vModelPath, const std::shared_ptr<CMaterial>& vMaterial)
+	std::shared_ptr<CNode> CMeshImporter::import(const std::string& vModelPath, EMaterialType vMatType)
 	{
+		if (m_pDiffuseTex == nullptr)
+		{
+			m_pDiffuseTex = std::make_shared<CTexture2D>(glm::vec3(1.0f, 1.0f, 1.0f));
+		}
+		if (m_pSpecularTex == nullptr)
+		{
+			m_pSpecularTex = std::make_shared<CTexture2D>(glm::vec3(0.0f, 0.0f, 0.0f));
+		}
+
 		Assimp::Importer AiImporter;
 		const aiScene* AiScene = AiImporter.ReadFile(vModelPath, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
 		if (!AiScene || AiScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !AiScene->mRootNode)
@@ -15,32 +26,30 @@ namespace Elena
 			spdlog::error("ERROR::ASSIMP:: {}", AiImporter.GetErrorString());
 			return nullptr;
 		}
-		m_CurrMaterial = vMaterial;
-		const auto& pRootNode = __processNode(AiScene->mRootNode, AiScene);
-		m_CurrMaterial = nullptr;
+		const auto& pRootNode = __processNode(AiScene->mRootNode, AiScene, vMatType);
 		spdlog::info("Loaded Model: {}", pRootNode->getName());
 		return pRootNode;
 	}
 
-	std::shared_ptr<CNode> CMeshImporter::__processNode(aiNode* vAiNode, const aiScene* vAiScene)
+	std::shared_ptr<CNode> CMeshImporter::__processNode(aiNode* vAiNode, const aiScene* vAiScene, EMaterialType vMatType)
 	{
 		const auto& pNode = std::make_shared<CNode>();
 		pNode->setName(vAiNode->mName.C_Str());
 		for (unsigned int i = 0; i < vAiNode->mNumMeshes; i++)
 		{
 			aiMesh* pAiMesh = vAiScene->mMeshes[vAiNode->mMeshes[i]];
-			pNode->addMesh(__processMesh(pAiMesh, vAiScene));
+			pNode->addMesh(__processMesh(pAiMesh, vAiScene, vMatType));
 		}
 		for (unsigned int i = 0; i < vAiNode->mNumChildren; i++)
 		{
-			const auto& pChildNode = __processNode(vAiNode->mChildren[i], vAiScene);
+			const auto& pChildNode = __processNode(vAiNode->mChildren[i], vAiScene, vMatType);
 			pChildNode->setParent(pNode);
 			pNode->addChild(pChildNode);
 		}
 		return pNode;
 	}
 
-	std::shared_ptr<CMesh> CMeshImporter::__processMesh(aiMesh* vAiMesh, const aiScene* vAiScene)
+	std::shared_ptr<CMesh> CMeshImporter::__processMesh(aiMesh* vAiMesh, const aiScene* vAiScene, EMaterialType vMatType)
 	{
 		std::vector<float> Vertices;
 		std::vector<unsigned int> Indices;
@@ -78,6 +87,8 @@ namespace Elena
 				Indices.push_back(Face.mIndices[j]);
 		}
 		const auto& pVertexBuffer = std::make_shared<CVertexBuffer>(Vertices, Indices, std::vector<int>{3, 3, 2});
-		return std::make_shared<CMesh>(pVertexBuffer, m_CurrMaterial);
+		if (vMatType != EMaterialType::PHONG)
+			spdlog::warn("Import Material not Supported");
+		return std::make_shared<CMesh>(pVertexBuffer, std::make_shared<CPhongMaterial>(m_pDiffuseTex, m_pSpecularTex, 32.0f, true));
 	}
 }
